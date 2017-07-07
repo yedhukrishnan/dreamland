@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -17,9 +18,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import dreamlander.dreamland.models.Entry;
+
 public class CreateEntryActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Context context;
+    private Entry entry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,21 +32,25 @@ public class CreateEntryActivity extends AppCompatActivity {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         context = this;
+        entry = new Entry();
 
-        requestLocation();
+        requestAndSetLocation();
     }
 
     @SuppressLint("MissingPermission")
-    private void requestLocation() {
+    private void requestAndSetLocation() {
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
 
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            Log.d("dreamland", "Location Success");
-                            Log.d("dreamland", getAddress(location));
-                        }
+                            Log.d("dreamland", "Located successfully");
+                            entry.setLocation(location);
+                            entry.setAddress(getAddress(location));
+                            TextView locationView = findViewById(R.id.location_view);
+                            locationView.setText(getAddress(location));
+                         }
                     }
                 });
     }
@@ -58,8 +66,7 @@ public class CreateEntryActivity extends AppCompatActivity {
         Address address = (Address) myList.get(0);
         String addressString = "";
         addressString += address.getAddressLine(0) + ", ";
-        addressString += address.getAddressLine(1) + ", ";
-        addressString += address.getAddressLine(2);
+        addressString += address.getAddressLine(1);
         return addressString;
     }
 }

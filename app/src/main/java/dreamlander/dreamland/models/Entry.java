@@ -11,6 +11,7 @@ import java.util.Date;
 public class Entry {
     private Date date;
     private Location location;
+    private String address;
 
     public Entry() {
         this.date = new Date();
@@ -26,5 +27,13 @@ public class Entry {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
