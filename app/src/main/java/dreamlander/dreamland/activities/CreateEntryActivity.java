@@ -1,4 +1,4 @@
-package dreamlander.dreamland;
+package dreamlander.dreamland.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import dreamlander.dreamland.R;
 import dreamlander.dreamland.models.Entry;
 
 public class CreateEntryActivity extends AppCompatActivity {

@@ -19,7 +19,7 @@
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="dreamlander.dreamland" />
 
         <activity
-            android:name=".DreamlandActivity"
+            android:name=".activities.DreamlandActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateEntryActivity"></activity>
+        <activity android:name=".activities.CreateEntryActivity"></activity>
     </application>
 
 </manifest>
