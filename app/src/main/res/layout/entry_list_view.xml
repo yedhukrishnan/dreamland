@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_margin="5dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/entry_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:ellipsize="end"
+            android:fontFamily="serif"
+            android:maxLines="3"
+            android:padding="5dp"
+            android:textColor="@color/cast_expanded_controller_background_color"
+            android:typeface="serif" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/date_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:fontFamily="serif"
+            android:padding="5dp"
+            android:textColor="@color/place_autocomplete_prediction_primary_text_highlight"
+            android:typeface="serif" />
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

@@ -8,6 +8,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -68,5 +71,27 @@ public class CreateEntryActivity extends AppCompatActivity {
         addressString += address.getAddressLine(0) + ", ";
         addressString += address.getAddressLine(1);
         return addressString;
+    }
+
+    private void saveEntry() {
+        EditText entryText = findViewById(R.id.entry_text);
+        entry.setText(entryText.getText().toString());
+        entry.save();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_create_entry, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorite:
+                this.saveEntry();
+                this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

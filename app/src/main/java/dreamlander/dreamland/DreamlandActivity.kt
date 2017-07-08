@@ -7,13 +7,16 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import dreamlander.dreamland.adapters.EntryListAdapter
+import dreamlander.dreamland.models.Entry
 
 import kotlinx.android.synthetic.main.activity_dreamland.*
 
 class DreamlandActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dreamland)
@@ -25,6 +28,28 @@ class DreamlandActivity : AppCompatActivity() {
             val intent = Intent(this, CreateEntryActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        createEntryListView()
+
+    }
+
+    private fun createEntryListView() {
+        var entryListRecyclerView = findViewById<RecyclerView>(R.id.entry_list_recycler_view) as RecyclerView
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        entryListRecyclerView.setHasFixedSize(true);
+
+        var layoutManager = LinearLayoutManager(this);
+        entryListRecyclerView.setLayoutManager(layoutManager);
+
+        var entries = Entry.listAll(Entry::class.java)
+
+        var entryListAdapter = EntryListAdapter(entries)
+        entryListRecyclerView.setAdapter(entryListAdapter);
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
