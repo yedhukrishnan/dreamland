@@ -50,7 +50,8 @@ public class CreateEntryActivity extends AppCompatActivity {
                     public void onSuccess(Location location) {
                         if (location != null) {
                             Log.d("dreamland", "Located successfully");
-                            entry.setLocation(location);
+                            entry.setLatitude(location.getLatitude());
+                            entry.setLongitude(location.getLongitude());
                             entry.setAddress(getAddress(location));
                             TextView locationView = findViewById(R.id.location_view);
                             locationView.setText(getAddress(location));
