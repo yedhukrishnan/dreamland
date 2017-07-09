@@ -1,5 +1,7 @@
 package dreamlander.dreamland.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import dreamlander.dreamland.R;
+import dreamlander.dreamland.activities.ViewEntryActivity;
 import dreamlander.dreamland.models.Entry;
 
 /**
@@ -17,6 +20,7 @@ import dreamlander.dreamland.models.Entry;
  */
 
 public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.ViewHolder> {
+    private Context context;
     private List<Entry> entries;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -31,8 +35,9 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
         List<Entry> entries = Entry.listAll(Entry.class);
     }
 
-    public EntryListAdapter(List<Entry> entries) {
+    public EntryListAdapter(List<Entry> entries, Context context) {
         this.entries = entries;
+        this.context = context;
     }
 
     @Override
@@ -45,10 +50,22 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Entry entry = entries.get(position);
+        final Entry entry = entries.get(position);
+
+        // For SugarORM only
+        entry.setEntryIdToId();
+
         Log.d("dreamland", entry.getText());
         holder.entryTextView.setText(entry.getText());
         holder.dateTextView.setText(entry.getFormattedDate());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ViewEntryActivity.class);
+                intent.putExtra("entry", entry);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

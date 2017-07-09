@@ -48,7 +48,7 @@ class DreamlandActivity : AppCompatActivity() {
 
         var entries = Entry.listAll(Entry::class.java)
 
-        var entryListAdapter = EntryListAdapter(entries)
+        var entryListAdapter = EntryListAdapter(entries, this)
         entryListRecyclerView.setAdapter(entryListAdapter);
     }
 

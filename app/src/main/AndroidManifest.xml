@@ -17,7 +17,7 @@
             android:value="sugar_example.db" />
         <meta-data
             android:name="VERSION"
-            android:value="3" />
+            android:value="4" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -35,7 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CreateEntryActivity"></activity>
+        <activity android:name=".activities.CreateEntryActivity" />
+        <activity android:name=".activities.ViewEntryActivity"></activity>
     </application>
 
 </manifest>
