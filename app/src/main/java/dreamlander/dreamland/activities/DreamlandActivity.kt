@@ -15,6 +15,7 @@ import dreamlander.dreamland.adapters.EntryListAdapter
 import dreamlander.dreamland.models.Entry
 
 import kotlinx.android.synthetic.main.activity_dreamland.*
+import java.util.*
 
 class DreamlandActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,7 @@ class DreamlandActivity : AppCompatActivity() {
         entryListRecyclerView.setLayoutManager(layoutManager);
 
         var entries = Entry.listAll(Entry::class.java)
+        Collections.reverse(entries)
 
         var entryListAdapter = EntryListAdapter(entries, this)
         entryListRecyclerView.setAdapter(entryListAdapter);
