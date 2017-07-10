@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import dreamlander.dreamland.R;
@@ -41,9 +40,11 @@ public class ViewEntryActivity extends AppCompatActivity {
     }
 
     private void saveEntry() {
-        EditText entryText = findViewById(R.id.entry_text);
-        entry.setText(entryText.getText().toString());
-        entry.save();
+        String text = entryTextView.getText().toString();
+        if(!text.isEmpty()) {
+            entry.setText(text);
+            entry.save();
+        }
     }
 
     private void showAlertDialogForDeletion() {

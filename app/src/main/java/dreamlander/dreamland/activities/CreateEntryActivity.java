@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,6 +31,7 @@ public class CreateEntryActivity extends AppCompatActivity {
     private Context context;
     private Entry entry;
     private boolean deleteEntry = false;
+    private TextView entryTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class CreateEntryActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        entryTextView = findViewById(R.id.entry_text);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         context = this;
@@ -84,9 +87,11 @@ public class CreateEntryActivity extends AppCompatActivity {
     }
 
     private void saveEntry() {
-        EditText entryText = findViewById(R.id.entry_text);
-        entry.setText(entryText.getText().toString());
-        entry.save();
+        String text = entryTextView.getText().toString();
+        if(!text.isEmpty()) {
+            entry.setText(text);
+            entry.save();
+        }
     }
 
     private void showAlertDialogForDeletion() {
