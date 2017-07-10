@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import dreamlander.dreamland.R;
 import dreamlander.dreamland.models.Entry;
+import dreamlander.dreamland.views.Typewriter;
 
 public class ViewEntryActivity extends AppCompatActivity {
 
@@ -28,8 +29,9 @@ public class ViewEntryActivity extends AppCompatActivity {
     private void setEntryDetails() {
         TextView entryTextView = findViewById(R.id.entry_text);
         entryTextView.setText(entry.getText());
-        TextView locationTextView = findViewById(R.id.location_view);
-        locationTextView.setText(entry.getAddress());
+        Typewriter locationView = findViewById(R.id.location_view);
+        locationView.setCharacterDelay(2);
+        locationView.animateText(entry.getAddress());
     }
 
     private void saveEntry() {

@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -22,6 +21,7 @@ import java.util.Locale;
 
 import dreamlander.dreamland.R;
 import dreamlander.dreamland.models.Entry;
+import dreamlander.dreamland.views.Typewriter;
 
 public class CreateEntryActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -55,8 +55,10 @@ public class CreateEntryActivity extends AppCompatActivity {
                             entry.setLatitude(location.getLatitude());
                             entry.setLongitude(location.getLongitude());
                             entry.setAddress(getAddress(location));
-                            TextView locationView = findViewById(R.id.location_view);
-                            locationView.setText(getAddress(location));
+
+                            Typewriter locationView = findViewById(R.id.location_view);
+                            locationView.setCharacterDelay(2);
+                            locationView.animateText(getAddress(location));
                          }
                     }
                 });
