@@ -2,12 +2,15 @@ package dreamlander.dreamland.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -27,6 +30,7 @@ public class CreateEntryActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Context context;
     private Entry entry;
+    private boolean deleteEntry = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,7 @@ public class CreateEntryActivity extends AppCompatActivity {
                             Typewriter locationView = findViewById(R.id.location_view);
                             locationView.setCharacterDelay(2);
                             locationView.animateText(getAddress(location));
-                         }
+                        }
                     }
                 });
     }
@@ -85,12 +89,44 @@ public class CreateEntryActivity extends AppCompatActivity {
         entry.save();
     }
 
+    private void showAlertDialogForDeletion() {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setMessage(R.string.confirm_delete_message)
+                .setPositiveButton(R.string.confirm_delete_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if(entry.getId() != null) {
+                            entry.delete();
+                        }
+                        deleteEntry = true;
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.confirm_cancel_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .create();
+        dialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_create_entry, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_delete:
+                this.showAlertDialogForDeletion();
+                break;
             case android.R.id.home:
                 this.saveEntry();
                 this.finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -98,6 +134,8 @@ public class CreateEntryActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        this.saveEntry();
+        if(!deleteEntry) {
+            this.saveEntry();
+        }
     }
 }

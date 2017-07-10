@@ -23,6 +23,7 @@
         android:gravity="top"
         android:inputType="textMultiLine"
         android:typeface="serif"
+        android:textColor="@color/entry_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

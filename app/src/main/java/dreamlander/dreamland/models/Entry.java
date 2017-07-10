@@ -77,4 +77,8 @@ public class Entry extends SugarRecord<Entry> implements Serializable {
     public void setEntryIdToId() {
         entryId = id;
     }
+
+    public void setIdToEntryId() {
+        id = entryId;
+    }
 }
