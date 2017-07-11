@@ -25,7 +25,7 @@ class DreamlandActivity : AppCompatActivity() {
 
         requestLocationPerission()
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
             val intent = Intent(this, CreateEntryActivity::class.java)
             startActivity(intent)
         }

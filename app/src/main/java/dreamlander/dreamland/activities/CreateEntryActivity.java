@@ -40,6 +40,7 @@ public class CreateEntryActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(0);
 
         entryTextView = findViewById(R.id.entry_text);
 

@@ -21,7 +21,7 @@
         android:ems="10"
         android:fontFamily="serif"
         android:gravity="top"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:typeface="serif"
         android:textColor="@color/entry_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
