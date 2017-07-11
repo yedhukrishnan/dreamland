@@ -26,18 +26,20 @@ import java.util.List;
 
 import dreamlander.dreamland.R;
 import dreamlander.dreamland.adapters.EntryListAdapter;
+import dreamlander.dreamland.fragments.CalendarFragment;
 import dreamlander.dreamland.fragments.EntryListFragment;
 import dreamlander.dreamland.models.Entry;
 
 public class DreamlandMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-            EntryListFragment.OnFragmentInteractionListener {
+            EntryListFragment.OnFragmentInteractionListener,
+            CalendarFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dreamland_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setNavigationDrawer(toolbar);
@@ -47,13 +49,13 @@ public class DreamlandMainActivity extends AppCompatActivity
     }
 
     private void setNavigationDrawer(Toolbar toolbar) {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -80,7 +82,7 @@ public class DreamlandMainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -118,13 +120,13 @@ public class DreamlandMainActivity extends AppCompatActivity
 
         if (id == R.id.entry_list_drawer_item) {
             setFragment(EntryListFragment.newInstance());
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.calendar_view_drawer_item) {
+            setFragment(CalendarFragment.newInstance("", ""));
         } else if (id == R.id.nav_send) {
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
