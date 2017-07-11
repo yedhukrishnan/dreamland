@@ -1,0 +1,1 @@
+ALTER TABLE Entry ADD COLUMN synced boolean NOT NULL default 0;

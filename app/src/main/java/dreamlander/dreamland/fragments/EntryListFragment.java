@@ -8,10 +8,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Collections;
 import java.util.List;

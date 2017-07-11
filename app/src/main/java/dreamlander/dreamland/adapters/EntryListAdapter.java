@@ -55,7 +55,6 @@ public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.View
         // For SugarORM only
         entry.setEntryIdToId();
 
-        Log.d("dreamland", entry.getText());
         holder.entryTextView.setText(entry.getText());
         holder.dateTextView.setText(entry.getFormattedDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,8 @@
 package dreamlander.dreamland.models;
 
+import android.util.Log;
+
+import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 
 import java.io.Serializable;
@@ -80,5 +83,13 @@ public class Entry extends SugarRecord<Entry> implements Serializable {
 
     public void setIdToEntryId() {
         id = entryId;
+    }
+
+    public boolean isSynced() {
+        return synced;
+    }
+
+    public void setSynced(boolean synced) {
+        this.synced = synced;
     }
 }
