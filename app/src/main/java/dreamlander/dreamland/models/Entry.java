@@ -1,7 +1,5 @@
 package dreamlander.dreamland.models;
 
-import android.util.Log;
-
 import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 
@@ -14,12 +12,20 @@ import java.util.Date;
  */
 
 public class Entry extends SugarRecord<Entry> implements Serializable {
+    @Expose
     private Long entryId;
+    @Expose
     private Date date;
+    @Expose
     private String address;
+    @Expose
     private String text;
+    @Expose
     private double latitude;
+    @Expose
     private double longitude;
+
+    private boolean synced = false;
 
     public Entry() {
         this.date = new Date();

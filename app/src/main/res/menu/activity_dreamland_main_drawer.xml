@@ -16,14 +16,14 @@
     </group>
 
     <item
-        android:title="Communicate"
-        android:visible="false">
+        android:title="Others">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/share_backup_drawer_item"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Share Backup" />
             <item
+                android:visible="false"
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
