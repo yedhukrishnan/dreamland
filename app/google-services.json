@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "21131248191",
+    "firebase_url": "https://dreamland-8a0fb.firebaseio.com",
+    "project_id": "dreamland-8a0fb",
+    "storage_bucket": "dreamland-8a0fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21131248191:android:4447133198c7f6d2",
+        "android_client_info": {
+          "package_name": "dreamlander.dreamland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21131248191-i4ueo4sbdkrua7sjrma0lvt4n5ue8v0p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dreamlander.dreamland",
+            "certificate_hash": "6e0df221c3d9f62bb5c259018a7dc9dbcb4d834a"
+          }
+        },
+        {
+          "client_id": "21131248191-1q2t0fk7m83c9j1a7p5vatdkjcb6f61g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE930HO4Ld5b5B3-TmndpMkHHBsfCOgps"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21131248191-1q2t0fk7m83c9j1a7p5vatdkjcb6f61g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

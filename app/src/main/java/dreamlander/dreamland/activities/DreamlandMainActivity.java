@@ -1,11 +1,17 @@
 package dreamlander.dreamland.activities;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -19,12 +25,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,18 +51,63 @@ public class DreamlandMainActivity extends AppCompatActivity
             CalendarFragment.OnFragmentInteractionListener {
 
     private List<Entry> entries;
+    private NavigationView navigationView;
+    private View headerView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        if(!isUserLoggedIn()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
         setContentView(R.layout.activity_dreamland_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        setSupportActionBar(toolbar);
         setNavigationDrawer(toolbar);
+        setNameAndEmail();
 
         setEntryListFragment();
         requestLocationPermission();
+    }
+
+    private boolean isUserLoggedIn() {
+        String name = sharedPreferences.getString("name", "Dreamlander");
+        return !name.equals("Dreamlander");
+    }
+
+    private void setNameAndEmail() {
+        String name = sharedPreferences.getString("name", "Dreamlander");
+        String email = sharedPreferences.getString("email", "dreamlandapp@gmail.com");
+
+        setTextOnView(R.id.username_view, name);
+        setTextOnView(R.id.email_view, email);
+
+//        ImageView imageView = headerView.findViewById(R.id.profile_pic_view);
+//        imageView.setImageBitmap(getProfileImage());
+    }
+
+    private void setTextOnView(int id, String text) {
+        TextView view = headerView.findViewById(id);
+        view.setText(text);
+    }
+
+    @Nullable
+    private Bitmap getProfileImage() {
+        File file =new File(getFilesDir(), "profile_picture.jpg");
+        Bitmap bitmap = null;
+        try {
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     @Override
@@ -69,8 +125,9 @@ public class DreamlandMainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        headerView = navigationView.getHeaderView(0);
     }
 
     private void setEntryListFragment() {
@@ -84,6 +141,12 @@ public class DreamlandMainActivity extends AppCompatActivity
     private void requestLocationPermission() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION }, 1);
+        }
+    }
+
+    private void requestWriteExternalStoragePermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
         }
     }
 
