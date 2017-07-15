@@ -20,6 +20,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,8 +33,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import dreamlander.dreamland.R;
+import dreamlander.dreamland.helpers.Logger;
+import dreamlander.dreamland.network.UserRegistration;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, UserRegistration.ResponseListener {
 
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
@@ -48,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build();
 
@@ -68,23 +75,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
             GoogleSignInAccount account = result.getSignInAccount();
-            setUserDetails(account);
-            finish();
+            registerUser(account);
         } else {
+            Logger.error(result.toString());
             Toast.makeText(this, "Sign in failed. Please try again later", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setUserDetails(GoogleSignInAccount account) {
-        SharedPreferences sharedPreferences = getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("email", account.getEmail());
-        editor.putString("name", account.getDisplayName());
-//        saveProfileImage(account.getPhotoUrl().toString());
-        editor.commit();
+    private void registerUser(GoogleSignInAccount account) {
+        UserRegistration userRegistration = new UserRegistration(this, this);
+        userRegistration.sendRegistrationRequest(account.getDisplayName(), account.getEmail());
     }
 
     private void saveProfileImage(final String imageUrl) {
@@ -145,6 +146,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Logger.error(connectionResult.getErrorMessage());
         Toast.makeText(this, "Connection failed. Please try again later", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRegistrationSuccess(@NotNull JSONObject response) {
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        try {
+            editor.putString("email", response.getString("email"));
+            editor.putString("name", response.getString("name"));
+            editor.putString("auth_token", response.getString("auth_token"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        editor.commit();
+        finish();
+    }
+
+    @Override
+    public void onRegistrationFailure(@Nullable String message) {
+        Logger.error(message);
+        Toast.makeText(this, "Registration failed. Please try again later", Toast.LENGTH_SHORT).show();
     }
 }
