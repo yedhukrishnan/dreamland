@@ -1,13 +1,14 @@
 package dreamlander.dreamland.network
 
 import android.content.Context
-import android.util.Log
+
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import com.android.volley.Response
 import dreamlander.dreamland.configurations.Config
+import dreamlander.dreamland.helpers.Logger;
 
 
 /**
@@ -42,7 +43,7 @@ class UserRegistration(context: Context, responseListener: ResponseListener) {
             registrationData.put("name", name)
             registrationData.put("email", email)
         } catch (e: Exception) {
-            Log.d("dreamland", e.message)
+            Logger.error(e.message);
         }
         userData.put("user", registrationData)
         return registrationData

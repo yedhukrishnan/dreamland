@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import dreamlander.dreamland.R;
 import dreamlander.dreamland.models.Entry;
+import dreamlander.dreamland.network.CreateEntryRequest;
 import dreamlander.dreamland.views.Typewriter;
 
 public class CreateEntryActivity extends AppCompatActivity {
@@ -91,7 +92,9 @@ public class CreateEntryActivity extends AppCompatActivity {
         String text = entryTextView.getText().toString();
         if(!text.isEmpty()) {
             entry.setText(text);
+            entry.setSynced(false);
             entry.save();
+            new CreateEntryRequest(this).sendRequest(entry);
         }
     }
 

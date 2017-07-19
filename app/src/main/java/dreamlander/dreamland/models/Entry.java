@@ -35,6 +35,14 @@ public class Entry extends SugarRecord<Entry> implements Serializable {
         uuid = UUID.randomUUID().toString();
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     public Date getDate() {
         return date;
     }
