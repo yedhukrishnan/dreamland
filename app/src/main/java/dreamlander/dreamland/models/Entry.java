@@ -6,12 +6,15 @@ import com.orm.SugarRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by yedhukrishnan on 06/07/17.
  */
 
 public class Entry extends SugarRecord<Entry> implements Serializable {
+    @Expose
+    private String uuid;
     @Expose
     private Long entryId;
     @Expose
@@ -28,7 +31,8 @@ public class Entry extends SugarRecord<Entry> implements Serializable {
     private boolean synced = false;
 
     public Entry() {
-        this.date = new Date();
+        date = new Date();
+        uuid = UUID.randomUUID().toString();
     }
 
     public Date getDate() {
