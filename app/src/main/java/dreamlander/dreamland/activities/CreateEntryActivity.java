@@ -75,16 +75,18 @@ public class CreateEntryActivity extends AppCompatActivity {
 
     private String getAddress(Location location) {
         Geocoder myLocation = new Geocoder(context, Locale.getDefault());
-        List<Address> myList = null;
+        List<Address> myList;
+        String addressString = "";
+
         try {
             myList = myLocation.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            Address address = myList.get(0);
+            addressString += address.getAddressLine(0) + ", ";
+            addressString += address.getAddressLine(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Address address = (Address) myList.get(0);
-        String addressString = "";
-        addressString += address.getAddressLine(0) + ", ";
-        addressString += address.getAddressLine(1);
+
         return addressString;
     }
 
