@@ -43,7 +43,9 @@ import dreamlander.dreamland.R;
 import dreamlander.dreamland.fragments.CalendarFragment;
 import dreamlander.dreamland.fragments.EntryListFragment;
 import dreamlander.dreamland.generators.EntriesPlainTextGenerator;
+import dreamlander.dreamland.helpers.NetworkManager;
 import dreamlander.dreamland.models.Entry;
+import dreamlander.dreamland.network.CreateEntryRequest;
 
 public class DreamlandMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -75,6 +77,17 @@ public class DreamlandMainActivity extends AppCompatActivity
 
         setEntryListFragment();
         requestLocationPermission();
+
+        if(NetworkManager.isNetWorkAvailable(this)) {
+            syncPendingEntries();
+        }
+    }
+
+    private void syncPendingEntries() {
+        List<Entry> entries = Entry.find(Entry.class, "synced = ?", "0");
+        if(entries.size() > 0) {
+            new CreateEntryRequest(this).sendRequest(entries);
+        }
     }
 
     private boolean isUserLoggedIn() {

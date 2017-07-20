@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import dreamlander.dreamland.R;
+import dreamlander.dreamland.helpers.NetworkManager;
 import dreamlander.dreamland.models.Entry;
 import dreamlander.dreamland.network.CreateEntryRequest;
 import dreamlander.dreamland.views.Typewriter;
@@ -28,7 +29,6 @@ public class ViewEntryActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
 
         entryTextView = findViewById(R.id.entry_text);
-//        entryTextView.setEnabled(false);
 
         entry = (Entry) getIntent().getSerializableExtra("entry");
         setEntryDetails();
@@ -47,7 +47,9 @@ public class ViewEntryActivity extends AppCompatActivity {
             entry.setText(text);
             entry.setSynced(false);
             entry.save();
-            new CreateEntryRequest(this).sendRequest(entry);
+            if(NetworkManager.isNetWorkAvailable(this)) {
+                new CreateEntryRequest(this).sendRequest(entry);
+            }
         }
     }
 

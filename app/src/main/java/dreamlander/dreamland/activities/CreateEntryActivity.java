@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 
 import dreamlander.dreamland.R;
+import dreamlander.dreamland.helpers.NetworkManager;
 import dreamlander.dreamland.models.Entry;
 import dreamlander.dreamland.network.CreateEntryRequest;
 import dreamlander.dreamland.views.Typewriter;
@@ -45,15 +46,17 @@ public class CreateEntryActivity extends AppCompatActivity {
 
         entryTextView = findViewById(R.id.entry_text);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         context = this;
         entry = new Entry();
 
-        requestAndSetLocation();
+        if(NetworkManager.isNetWorkAvailable(this)) {
+            requestAndSetLocation();
+        }
     }
 
     @SuppressLint("MissingPermission")
     private void requestAndSetLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
 
@@ -96,7 +99,9 @@ public class CreateEntryActivity extends AppCompatActivity {
             entry.setText(text);
             entry.setSynced(false);
             entry.save();
-            new CreateEntryRequest(this).sendRequest(entry);
+            if(NetworkManager.isNetWorkAvailable(this)) {
+                new CreateEntryRequest(this).sendRequest(entry);
+            }
         }
     }
 
