@@ -19,13 +19,13 @@ class UserRegistration(context: Context, responseListener: ResponseListener) {
     private var context: Context = context
     private var responseListener: ResponseListener = responseListener
 
-    fun sendRegistrationRequest(name: String, email: String) {
+    fun sendRegistrationRequest(idToken: String) {
         var requestQueue = Volley.newRequestQueue(context)
 
         val registrationRequest = JsonObjectRequest(
                 Request.Method.POST,
                 Config.REGISTRATION_URL,
-                getJsonPayload(name, email),
+                getJsonPayload(idToken),
                 Response.Listener<JSONObject> { response ->
                     responseListener.onRegistrationSuccess(response)
                 },
@@ -36,17 +36,16 @@ class UserRegistration(context: Context, responseListener: ResponseListener) {
         requestQueue.add(registrationRequest)
     }
 
-    private fun getJsonPayload(name: String, email: String): JSONObject {
+    private fun getJsonPayload(idToken: String): JSONObject {
         val userData = JSONObject()
         val registrationData = JSONObject()
         try {
-            registrationData.put("name", name)
-            registrationData.put("email", email)
+            registrationData.put("id_token", idToken)
         } catch (e: Exception) {
             Logger.error(e.message);
         }
         userData.put("user", registrationData)
-        return registrationData
+        return userData
     }
 
     interface ResponseListener {

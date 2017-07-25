@@ -33,10 +33,8 @@ class CreateEntryRequest(context: Context) {
         val requestQueue = Volley.newRequestQueue(context)
 
         val request = ServerJsonObjectRequest(
-
-
                 Request.Method.POST,
-                Config.CREATE_ENTRY_URL,
+                Config.ENTRIES_URL,
                 entriesPayLoad,
                 Response.Listener<JSONObject>({ response ->
                     setEntriesAsSynced(entriesList)

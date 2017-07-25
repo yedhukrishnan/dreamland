@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void setGoogleSigninButton() {
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
 
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void registerUser(GoogleSignInAccount account) {
         UserRegistration userRegistration = new UserRegistration(this, this);
-        userRegistration.sendRegistrationRequest(account.getDisplayName(), account.getEmail());
+        userRegistration.sendRegistrationRequest(account.getIdToken());
     }
 
     private void saveProfileImage(final String imageUrl) {
