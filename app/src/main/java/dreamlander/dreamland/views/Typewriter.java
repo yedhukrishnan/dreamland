@@ -33,6 +33,9 @@ public class Typewriter extends android.support.v7.widget.AppCompatTextView {
     };
 
     public void animateText(CharSequence text) {
+        if(text == null) {
+            return;
+        }
         this.text = text;
         index = 0;
 
