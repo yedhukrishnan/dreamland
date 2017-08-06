@@ -44,6 +44,7 @@ import dreamlander.dreamland.fragments.CalendarFragment;
 import dreamlander.dreamland.fragments.EntryListFragment;
 import dreamlander.dreamland.generators.EntriesPlainTextGenerator;
 import dreamlander.dreamland.helpers.NetworkManager;
+import dreamlander.dreamland.helpers.PermissionManager;
 import dreamlander.dreamland.models.Entry;
 import dreamlander.dreamland.network.CreateEntryRequest;
 
@@ -152,7 +153,7 @@ public class DreamlandMainActivity extends AppCompatActivity
     }
 
     private void requestLocationPermission() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if(!PermissionManager.isLocationPermissionGranted(this)) {
             ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION }, 1);
         }
     }

@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import dreamlander.dreamland.R;
 import dreamlander.dreamland.helpers.NetworkManager;
+import dreamlander.dreamland.helpers.PermissionManager;
 import dreamlander.dreamland.models.Entry;
 import dreamlander.dreamland.network.CreateEntryRequest;
 import dreamlander.dreamland.views.Typewriter;
@@ -49,7 +50,7 @@ public class CreateEntryActivity extends AppCompatActivity {
         context = this;
         entry = new Entry();
 
-        if(NetworkManager.isNetWorkAvailable(this)) {
+        if(NetworkManager.isNetWorkAvailable(this) && PermissionManager.isLocationPermissionGranted(this)) {
             requestAndSetLocation();
         }
     }
