@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -40,13 +41,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+        if(isUserLoggedIn()) {
+            startMainActivity();
+            finish();
+        }
+
+        setContentView(R.layout.activity_login);
         setGoogleSigninButton();
+
+        progressBar = findViewById(R.id.indeterminate_bar);
+    }
+
+    private boolean isUserLoggedIn() {
+        String name = getSharedPreferences(getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE).getString("name", "Dreamlander");
+        return !name.equals("Dreamlander");
     }
 
     private void setGoogleSigninButton() {
@@ -70,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void signIn() {
+        progressBar.setVisibility(View.VISIBLE);
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -79,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             GoogleSignInAccount account = result.getSignInAccount();
             registerUser(account);
         } else {
+            progressBar.setVisibility(View.INVISIBLE);
             Logger.error(result.toString());
             Toast.makeText(this, "Sign in failed. Please try again later", Toast.LENGTH_SHORT).show();
         }
@@ -164,7 +181,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }
         editor.commit();
-        finish();
+        progressBar.setVisibility(View.INVISIBLE);
+        startMainActivity();
+    }
+
+    private void startMainActivity() {
+        Intent intent = new Intent(this, DreamlandMainActivity.class);
+        startActivity(intent);
     }
 
     @Override

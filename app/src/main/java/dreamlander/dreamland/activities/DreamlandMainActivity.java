@@ -64,11 +64,6 @@ public class DreamlandMainActivity extends AppCompatActivity
 
         sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        if(!isUserLoggedIn()) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-
         setContentView(R.layout.activity_dreamland_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -89,11 +84,6 @@ public class DreamlandMainActivity extends AppCompatActivity
         if(entries.size() > 0) {
             new CreateEntryRequest(this).sendRequest(entries);
         }
-    }
-
-    private boolean isUserLoggedIn() {
-        String name = sharedPreferences.getString("name", "Dreamlander");
-        return !name.equals("Dreamlander");
     }
 
     private void setNameAndEmail() {
